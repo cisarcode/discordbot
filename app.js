@@ -23,8 +23,6 @@ import {
 import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 
-
-
 // const axios = require('axios');
 // import axios
 import axios from 'axios';
@@ -57,39 +55,6 @@ const getTokenAuth = async (code) => {
     console.error(error);
   }
 };
-
-
-// Ejemplo de uso: pasamos el código de autorización recibido de Discord
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//MTA1MzY0MTI0ODkyNzM4MzYyMw.GJtpnd.W7as6dDgadMKRh8I4qRfT4D6e7-Q2UZ-s2WT2A
-// Token de acceso de tu cuenta de Discord
-                        //  MTA1MzY0MTI0ODkyNzM4MzYyMw.GP2ot1.8cT_gQgYZBOY3zkio7Jb2fl0XnQdM1cBqp9KBA autorizacion cabeceera red
-                          //MTA1MzY0MTI0ODkyNzM4MzYyMw.GJtpnd.W7as6dDgadMKRh8I4qRfT4D6e7-Q2UZ-s2WT2A  no recuerdo de donde saque
-const mitokendediscord = 'MTA1MzY0MTI0ODkyNzM4MzYyMw.GP2ot1.8cT_gQgYZBOY3zkio7Jb2fl0XnQdM1cBqp9KBA'; //token de acceso en almacenamiento local
-//const mitokendediscord   = '1088486036600008764';
 
 
 import Discord from 'discord.js';
@@ -125,27 +90,12 @@ client.on('interactionCreate', async interaction => {
 });
 
 
-
-
-
-//client.login(process.env.TOKEN);
-client.login({
-  email: 'cisarcode@gmail.com',
-    password: 'Lorencia85*'
-    }
-);
-client.on('message', async message => {
-  if (message.content === 'ping') {
-    // Responde desde tu cuenta con un mensaje
-    message.channel.send('pong');
-  }
-});
-
-
-
-
-
-
+client.login(process.env.DISCORD_TOKEN);
+// client.login({
+//   email: 'cisarcode@gmail.com',
+//     password: 'Lorencia85*'
+//     }
+// );
 
 // Create an express app
 const app = express();
@@ -156,7 +106,6 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
 // Store for in-progress games. In production, you'd want to use a DB
 const activeGames = {};
-
 
 
 
@@ -179,18 +128,14 @@ app.post('/interactions', async function (req, res) {
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
-    const { name } = data;
-console.log(data);
-    // "test" command
+    const { name, options } = data;
+
     if (name === 'test') {
-      // Send a message into the channel where command was triggered from
-//      const message = data.options[0].value;
-     // const message = data.options[0] ? data.options[0].value : '';
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: '/imagine prompt: birds',
+          content: '/imagine prompt: birds' ,
         },
       });
     }
