@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de endpoints de ngrok</title>
+</head>
+<body>
+<h1>Lista de endpoints de ngrok</h1>
+<ul id="endpoints-list"></ul>
+<script>
+    const apiKey = "1088459887173963887";
+    const endpoint = "https://api.ngrok.com/endpoints";
+    const headers = {
+        "Authorization": `Bearer ${apiKey}`,
+        "Ngrok-Version": "2"
+    };
+
+    fetch(endpoint, { headers })
+        .then(response => response.json())
+        .then(data => {
+            const endpointsList = document.getElementById("endpoints-list");
+            data.endpoints.forEach(endpoint => {
+                const li = document.createElement("li");
+                li.textContent = endpoint.public_url;
+                endpointsList.appendChild(li);
+            });
+        })
+        .catch(error => console.error(error));
+</script>
+</body>
+</html>
